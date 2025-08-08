@@ -1,43 +1,54 @@
 async function askQuestion() {
-
-    const apiKey = document.getElementById("apiKey").value;
-    const question = document.getElementById("question").value;
+    const apiKey = document.getElementById("apiKey").value.trim();
+    const question = document.getElementById("question").value.trim();
     const button = document.getElementById("askButton");
     const responseSection = document.getElementById("responseSection");
     const responseText = document.getElementById("responseText");
 
-    //Ocultar resposta anterior
-    responseSection.classList.add('hidden');
+    if (!apiKey || !question) {
+        alert("Preencha a chave da API e a pergunta.");
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Carregando...";
+    responseSection.classList.add("hidden");
+    responseText.textContent = "";
 
     try {
-        // Fazer requisição para API do Gemini
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{
-                        text: question
-                    }]
-                }],
-                generationConfig: {
-                    temperature: 0.7,
-                    maxOutputTokens: 1000
-                }
-            })
-        });
+        const response = await fetch(
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-goog-api-key": apiKey,
+                },
+                body: JSON.stringify({
+                    contents: [
+                        {
+                            parts: [{ text: question }],
+                        },
+                    ],
+                    generationConfig: {
+                        temperature: 0.7,
+                        maxOutputTokens: 1000,
+                    },
+                }),
+            }
+        );
 
         const data = await response.json();
 
         //Verificar se houve erro na resposta
-        if(!response.ok) {
-           throw new Error(data.error?.message || 'Erro na requisição'); 
+        if (!response.ok) {
+            const errorMsg = data?.error?.message || data?.message || "Erro na requisição";
+            throw new Error(errorMsg);
         }
 
-        responseText.textContent = data.candidates[0].content.parts[0].text;
-        responseSection.classList.remove('hidden');
+        // Exibir a resposta do Gemini
+        responseText.textContent = data.candidates?.[0]?.content?.parts?.[0]?.text || "Resposta vazia";
+        responseSection.classList.remove("hidden");
 
     } catch (error) {
         responseText.textContent = `Erro: ${error.message}`;
@@ -47,3 +58,5 @@ async function askQuestion() {
         button.textContent = 'Perguntar';
     }
 }
+
+document.getElementById("askButton").addEventListener("click", askQuestion);
