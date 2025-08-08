@@ -203,3 +203,16 @@ function clearResponse() {
     
     showNotification('🧹 Resposta limpa!');
 }
+
+function mostrarResposta(textoResposta) {
+    const responseSection = document.getElementById('responseSection');
+    const responseText = document.getElementById('responseText');
+    
+    responseText.innerHTML = textoResposta;
+    responseSection.classList.add('show');
+}
+
+function esconderResposta() {
+    const responseSection = document.getElementById('responseSection');
+    responseSection.classList.remove('show');
+}

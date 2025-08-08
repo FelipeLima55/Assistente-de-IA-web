@@ -58,10 +58,19 @@ body {
     box-sizing: border-box;
 }
 
-.question-section,
-.response-section {
+.question-section {
     margin-top: 20px;
     padding: 0 10px;
+}
+
+#responseSection {
+    margin-top: 20px;
+    padding: 0 10px;
+    display: none;
+}
+
+#responseSection.show {
+    display: block;
 }
 
 label {
