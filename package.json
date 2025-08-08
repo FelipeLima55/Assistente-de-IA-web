@@ -1,0 +1,20 @@
+{
+  "name": "projeto-assistente-ia-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FelipeLima55/Assistente-de-IA-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FelipeLima55/Assistente-de-IA-web/issues"
+  },
+  "homepage": "https://github.com/FelipeLima55/Assistente-de-IA-web#readme"
+}
