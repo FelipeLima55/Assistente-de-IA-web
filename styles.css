@@ -66,12 +66,12 @@ body {
 #responseSection {
     margin-top: 20px;
     padding: 0 10px;
-    display: none;
 }
 
-#responseSection.show {
-    display: block;
+.hidden {
+    display: none !important;
 }
+
 
 label {
     font-weight: bold;
@@ -129,14 +129,25 @@ button:disabled {
     padding: 8px 12px;
 }
 
-.response-box {
+.response-text {
     background-color: #ecf0f1;
     border: 1px solid #ccc;
     padding: 15px;
     border-radius: 4px;
     min-height: 100px;
     white-space: pre-wrap; /* Para preservar a formatação da resposta da API */
-    display: none; /* Inicia oculto, como requerido [cite: 32] */
+    line-height: 1.6;
+}
+
+/*animações para as notificações*/
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
 }
 
 /* Animações */
