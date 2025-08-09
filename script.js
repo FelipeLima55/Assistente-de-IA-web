@@ -56,7 +56,7 @@ async function askQuestion() {
         responseSection.classList.remove('hidden');
     } finally {
         button.disabled = false;
-        button.textContent = 'Perguntar';
+        button.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Perguntar';
     }
 }
 
@@ -193,26 +193,10 @@ document.getElementById('apiKey').addEventListener('blur', function () {
     }
 });
 
-// Função para limpar resposta
-function clearResponse() {
-    const responseSection = document.getElementById('responseSection');
-    const responseText = document.getElementById('responseText');
-    
-    responseText.innerHTML = '';
-    responseSection.classList.add('hidden');
-    
-    showNotification('🧹 Resposta limpa!');
-}
-
-function mostrarResposta(textoResposta) {
-    const responseSection = document.getElementById('responseSection');
-    const responseText = document.getElementById('responseText');
-    
-    responseText.innerHTML = textoResposta;
-    responseSection.classList.add('show');
-}
-
-function esconderResposta() {
-    const responseSection = document.getElementById('responseSection');
-    responseSection.classList.remove('show');
-}
+// Carregar API Key salva
+document.addEventListener('DOMContentLoaded', function() {
+    const savedApiKey = localStorage.getItem('gemini_api_key');
+    if (savedApiKey) {
+        document.getElementById('apiKey').value = savedApiKey;
+    }
+});
