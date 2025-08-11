@@ -66,6 +66,8 @@ projeto/
 - Cole sua API Key no campo apropriado
 - Digite sua pergunta e clique em "Perguntar"
 
+- Caso queira apenas testar, pode utilizar o link do deploy: https://felipelima55.github.io/Assistente-de-IA-web/
+
 ## 💻 Tecnologias Utilizadas
 
 - **HTML5** - Estrutura semântica
