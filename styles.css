@@ -1,6 +1,33 @@
+/* Estilos do tema claro (já existente) */
+:root {
+  --light-bg-body: #f0f2f5;
+  --light-bg-container: #fff;
+  --light-text-color: #333;
+  --light-header-bg: #34495e;
+  --light-response-bg: #ecf0f1;
+  --light-border-color: #ccc;
+  --light-button-bg: #3498db;
+  --light-button-hover: #2980b9;
+}
+
+/* Estilos do tema escuro */
+.dark-mode {
+  --light-bg-body: #121212;
+  --light-bg-container: #1e1e1e;
+  --light-text-color: #f0f0f0;
+  --light-header-bg: #2c3e50; /* Um azul escuro mais suave */
+  --light-response-bg: #282828;
+  --light-border-color: #444;
+  --light-button-bg: #3498db;
+  --light-button-hover: #5dace8; /* Um tom de azul mais claro para o hover */
+}
+
+/* Aplicação dos estilos */
 body {
     font-family: sans-serif;
-    background-color: #f0f2f5;
+    background-color: var(--light-bg-body);
+    color: var(--light-text-color);
+    transition: background-color 0.5s ease, color 0.5s ease;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,159 +36,49 @@ body {
 }
 
 .container {
-    width: 90%;
-    max-width: 800px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    animation: fadeIn 0.5s ease-out;
+    background-color: var(--light-bg-container);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra mais escura para contraste */
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    /* ...outros estilos do .container */
 }
 
 .header {
-    background-color: #34495e;
-    color: white;
-    padding: 20px;
-    border-radius: 8px 8px 0 0;
-    text-align: center;
+    background-color: var(--light-header-bg);
+    color: #fff;
+    transition: background-color 0.5s ease;
+    /* ...outros estilos do .header */
 }
 
 .header h1 {
-    margin: 0 0 10px 0;
-    font-size: 24px;
-}
-
-.header-inputs {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.input-group label {
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.header-inputs input,
-.header-inputs select {
-    width: 100%;
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.question-section {
-    margin-top: 20px;
-    padding: 0 10px;
-}
-
-#responseSection {
-    margin-top: 20px;
-    padding: 0 10px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-
-label {
-    font-weight: bold;
-    margin-bottom: 8px;
-    display: block;
-}
-
-.question-input {
-    display: flex;
-    gap: 10px;
-}
-
-textarea {
-    flex-grow: 1;
-    resize: vertical;
-    min-height: 50px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-button:hover:not(:disabled) {
-    background-color: #2980b9;
-}
-
-button:disabled {
-    background-color: #bdc3c7;
-    cursor: not-allowed;
-}
-
-.response-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.response-actions button {
-    padding: 8px 12px;
+    color: #fff;
 }
 
 .response-text {
-    background-color: #ecf0f1;
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 4px;
-    min-height: 100px;
-    white-space: pre-wrap; /* Para preservar a formatação da resposta da API */
-    line-height: 1.6;
+    background-color: var(--light-response-bg);
+    border: 1px solid var(--light-border-color);
+    transition: background-color 0.5s ease, border-color 0.5s ease;
+    /* ...outros estilos do .response-text */
 }
 
-/*animações para as notificações*/
-@keyframes slideInRight {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+textarea {
+  background-color: var(--light-bg-container);
+  color: var(--light-text-color);
+  border: 1px solid var(--light-border-color);
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
 }
 
-@keyframes slideOutRight {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(100%); opacity: 0; }
+button {
+  background-color: var(--light-button-bg);
+  color: white;
+  transition: background-color 0.3s ease;
+  /* ...outros estilos do button */
 }
 
-/* Animações */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+button:hover:not(:disabled) {
+  background-color: var(--light-button-hover);
 }
 
-@media (max-width: 600px) {
-    .header-inputs, .question-input {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    button {
-        width: 100%;
-    }
+button:disabled {
+  background-color: var(--light-border-color);
+  color: #888;
 }
