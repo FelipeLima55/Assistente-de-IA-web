@@ -26,9 +26,7 @@ async function askQuestion() {
                 },
                 body: JSON.stringify({
                     contents: [
-                        {
-                            parts: [{ text: question }],
-                        },
+                        { parts: [{ text: question }] }
                     ],
                     generationConfig: {
                         temperature: 0.7,
@@ -40,50 +38,50 @@ async function askQuestion() {
 
         const data = await response.json();
 
-        //Verificar se houve erro na resposta
         if (!response.ok) {
             const errorMsg = data?.error?.message || data?.message || "Erro na requisição";
             throw new Error(errorMsg);
         }
 
-        // Exibir a resposta do Gemini
         const rawResponse = data.candidates[0].content.parts[0].text;
         responseText.innerHTML = formatResponse(rawResponse);
-        responseSection.classList.remove('hidden');
+
+        // mostrar resposta com animação
+        showResponse();
 
     } catch (error) {
         responseText.textContent = `Erro: ${error.message}`;
-        responseSection.classList.remove('hidden');
+        showResponse();
     } finally {
         button.disabled = false;
         button.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Perguntar';
     }
 }
 
-//Clique do Botão Ask
-    document.getElementById("askButton").addEventListener("click", askQuestion);
+function showResponse() {
+    const responseSection = document.getElementById("responseSection");
+    responseSection.classList.remove("hidden");
+    responseSection.style.animation = "fadeInResponse 0.5s ease";
+}
 
-// Função para copiar resposta
+document.getElementById("askButton").addEventListener("click", askQuestion);
+
+// copiar resposta
 function copyResponse() {
     const responseText = document.getElementById('responseText');
-    
-    // Pegar o texto sem formatação HTML
     const textToCopy = responseText.innerText || responseText.textContent;
-    
+
     if (navigator.clipboard && window.isSecureContext) {
-        // Método moderno
         navigator.clipboard.writeText(textToCopy).then(() => {
             showNotification('✅ Resposta copiada!');
         }).catch(() => {
             fallbackCopy(textToCopy);
         });
     } else {
-        // Fallback para navegadores antigos ou HTTP
         fallbackCopy(textToCopy);
     }
 }
 
-// Função fallback para copiar
 function fallbackCopy(text) {
     const textArea = document.createElement('textarea');
     textArea.value = text;
@@ -91,36 +89,33 @@ function fallbackCopy(text) {
     textArea.style.opacity = '0';
     document.body.appendChild(textArea);
     textArea.select();
-    
+
     try {
         document.execCommand('copy');
         showNotification('✅ Resposta copiada!');
     } catch (err) {
         showNotification('❌ Erro ao copiar');
     }
-    
+
     document.body.removeChild(textArea);
 }
 
-// Função para limpar resposta
 function clearResponse() {
     const responseSection = document.getElementById('responseSection');
     const responseText = document.getElementById('responseText');
-    
+
     responseText.innerHTML = '';
     responseSection.classList.add('hidden');
-    
+
     showNotification('🧹 Resposta limpa!');
 }
 
-// Função para mostrar notificações
 function showNotification(message) {
-    // Remover notificação anterior se existir
     const existingNotification = document.querySelector('.notification');
     if (existingNotification) {
         existingNotification.remove();
     }
-    
+
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
@@ -138,10 +133,9 @@ function showNotification(message) {
         font-weight: 500;
         animation: slideInRight 0.3s ease-out;
     `;
-    
+
     document.body.appendChild(notification);
-    
-    // Remover após 3 segundos
+
     setTimeout(() => {
         if (notification.parentNode) {
             notification.style.animation = 'slideOutRight 0.3s ease-in';
@@ -150,53 +144,67 @@ function showNotification(message) {
     }, 3000);
 }
 
-// Event listeners para os botões
 document.addEventListener('DOMContentLoaded', function() {
-    // Botão copiar
     const btnCopiar = document.getElementById('btnCopiar');
-    if (btnCopiar) {
-        btnCopiar.addEventListener('click', copyResponse);
-    }
-    
-    // Botão limpar
+    if (btnCopiar) btnCopiar.addEventListener('click', copyResponse);
+
     const btnLimpar = document.getElementById('btnLimpar');
-    if (btnLimpar) {
-        btnLimpar.addEventListener('click', clearResponse);
-    }
+    if (btnLimpar) btnLimpar.addEventListener('click', clearResponse);
 });
 
-
-//Função para validar API key do Gemini
+// validar api key
 function validateApiKey(apiKey) {
     return apiKey && apiKey.trim().length > 0 && apiKey.startsWith('AIza');
 }
 
-// Função utilitária para formatar resposta
 function formatResponse(text) {
-    // Quebrar linhas longas e formatar código se houver
     return text
         .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>')
         .replace(/`([^`]+)`/g, '<code>$1</code>')
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // **negrito**
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')              // *itálico*
-        .replace(/^#{1,6}\s+(.*$)/gim, '<h3>$1</h3>')      // ## Títulos
-        .replace(/^\* (.*$)/gim, '<li>$1</li>')            // * lista
-        .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')         // envolver lista em <ul>
-        .replace(/\n\n/g, '</p><p>')                       // parágrafos
-        .replace(/\n/g, '<br>');                           // quebras de linha
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/^#{1,6}\s+(.*$)/gim, '<h3>$1</h3>')
+        .replace(/^\* (.*$)/gim, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>');
 }
 
-// Salvar API Key do Gemini no localStorage
+// salvar e carregar api key
 document.getElementById('apiKey').addEventListener('blur', function () {
     if (this.value.trim()) {
         localStorage.setItem('gemini_api_key', this.value);
     }
 });
 
-// Carregar API Key salva
 document.addEventListener('DOMContentLoaded', function() {
     const savedApiKey = localStorage.getItem('gemini_api_key');
     if (savedApiKey) {
         document.getElementById('apiKey').value = savedApiKey;
     }
 });
+
+// Dark Mode toggle
+document.getElementById("toggleDarkMode").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+});
+
+//contador de caracteres
+const textarea = document.getElementById('question');
+const charCounter = document.getElementById('charCounter');
+const maxLength = 500;
+
+function updateCharCounter() {
+    const currentLength = textarea.value.length;
+    charCounter.textContent = `${currentLength} / ${maxLength}`;
+    
+    charCounter.classList.remove('warning', 'danger');
+    const percentage = (currentLength / maxLength) * 100;
+    
+    if (percentage >= 100) charCounter.classList.add('danger');
+    else if (percentage >= 80) charCounter.classList.add('warning');
+}
+
+textarea.addEventListener('input', updateCharCounter);
+textarea.addEventListener('paste', () => setTimeout(updateCharCounter, 10));
+updateCharCounter();

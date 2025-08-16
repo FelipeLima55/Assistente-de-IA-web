@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Assistente de IA 🤖</title>
+    <title>Assistente de IA </title>
     <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
@@ -30,15 +30,24 @@
               <option value="gemini-pro">Gemini Pro (Google)</option>
             </select>
           </div>
+          <!-- Novo botão Dark Mode -->
+          <button id="toggleDarkMode">
+            <i class="fa-solid fa-moon"></i> Dark Mode
+          </button>
         </div>
       </header>
 
       <section class="question-section">
         <label for="question">Faça sua pergunta:</label>
         <div class="question-input">
-          <textarea id="question"
+          <div class="textarea-wrapper"></div>
+          <textarea
+            id="question"
             placeholder="Digite sua pergunta aqui..."
+            maxlength="500"
           ></textarea>
+          <div class="char-counter" id="charCounter">0 / 500</div>
+          </div>
           <button id="askButton">
             <i class="fa-solid fa-paper-plane"></i> Perguntar
           </button>
