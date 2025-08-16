@@ -40,9 +40,14 @@
       <section class="question-section">
         <label for="question">Faça sua pergunta:</label>
         <div class="question-input">
-          <textarea id="question"
+          <div class="textarea-wrapper"></div>
+          <textarea
+            id="question"
             placeholder="Digite sua pergunta aqui..."
+            maxlength="500"
           ></textarea>
+          <div class="char-counter" id="charCounter">0 / 500</div>
+          </div>
           <button id="askButton">
             <i class="fa-solid fa-paper-plane"></i> Perguntar
           </button>

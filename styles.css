@@ -110,6 +110,7 @@ label {
 .question-input {
     display: flex;
     gap: 10px;
+    position: relative;
 }
 
 textarea {
@@ -128,6 +129,58 @@ textarea {
     background-color: #374151;
     color: #e0e0e0;
     border-color: #4b5563;
+}
+
+.textarea-wrapper {
+    position: relative;
+    flex-grow: 1;
+}
+
+textarea {
+    padding-bottom: 35px;
+}
+
+.char-counter {
+    position: absolute;
+    bottom: 12px;
+    right: 15px; 
+    font-size: 11px;
+    color: #666;
+    background-color: rgba(240, 240, 240, 0.95);
+    padding: 3px 8px;
+    border-radius: 12px; 
+    transition: all 0.3s ease;
+    pointer-events: none;
+    border: 1px solid rgba(200, 200, 200, 0.3); 
+    font-weight: 500; 
+}
+
+.dark-mode .char-counter {
+    color: #a0a0a0;
+    background-color: rgba(60, 60, 60, 0.95);
+    border-color: rgba(120, 120, 120, 0.3);
+}
+
+.char-counter.warning {
+    color: #f39c12;
+    font-weight: bold;
+    background-color: rgba(243, 156, 18, 0.1);
+}
+
+.char-counter.danger {
+    color: #e74c3c;
+    font-weight: bold;
+    background-color: rgba(231, 76, 60, 0.1);
+}
+
+.dark-mode .char-counter.warning {
+    color: #f1c40f;
+    background-color: rgba(241, 196, 15, 0.15);
+}
+
+.dark-mode .char-counter.danger {
+    color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.15);
 }
 
 button {

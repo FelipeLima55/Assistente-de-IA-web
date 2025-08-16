@@ -188,3 +188,23 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById("toggleDarkMode").addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
 });
+
+//contador de caracteres
+const textarea = document.getElementById('question');
+const charCounter = document.getElementById('charCounter');
+const maxLength = 500;
+
+function updateCharCounter() {
+    const currentLength = textarea.value.length;
+    charCounter.textContent = `${currentLength} / ${maxLength}`;
+    
+    charCounter.classList.remove('warning', 'danger');
+    const percentage = (currentLength / maxLength) * 100;
+    
+    if (percentage >= 100) charCounter.classList.add('danger');
+    else if (percentage >= 80) charCounter.classList.add('warning');
+}
+
+textarea.addEventListener('input', updateCharCounter);
+textarea.addEventListener('paste', () => setTimeout(updateCharCounter, 10));
+updateCharCounter();
