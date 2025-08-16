@@ -1,33 +1,6 @@
-/* Estilos do tema claro (já existente) */
-:root {
-  --light-bg-body: #f0f2f5;
-  --light-bg-container: #fff;
-  --light-text-color: #333;
-  --light-header-bg: #34495e;
-  --light-response-bg: #ecf0f1;
-  --light-border-color: #ccc;
-  --light-button-bg: #3498db;
-  --light-button-hover: #2980b9;
-}
-
-/* Estilos do tema escuro */
-.dark-mode {
-  --light-bg-body: #121212;
-  --light-bg-container: #1e1e1e;
-  --light-text-color: #f0f0f0;
-  --light-header-bg: #2c3e50; /* Um azul escuro mais suave */
-  --light-response-bg: #282828;
-  --light-border-color: #444;
-  --light-button-bg: #3498db;
-  --light-button-hover: #5dace8; /* Um tom de azul mais claro para o hover */
-}
-
-/* Aplicação dos estilos */
 body {
     font-family: sans-serif;
-    background-color: var(--light-bg-body);
-    color: var(--light-text-color);
-    transition: background-color 0.5s ease, color 0.5s ease;
+    background-color: #f0f2f5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,7 +44,8 @@ body.dark-mode {
 }
 
 .header h1 {
-    color: #fff;
+    margin: 0 0 10px 0;
+    font-size: 24px;
 }
 
 .header-inputs {
@@ -157,10 +131,17 @@ textarea {
 }
 
 button {
-  background-color: var(--light-button-bg);
-  color: white;
-  transition: background-color 0.3s ease;
-  /* ...outros estilos do button */
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 button:hover:not(:disabled) {
